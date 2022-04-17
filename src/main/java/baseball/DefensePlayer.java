@@ -9,15 +9,18 @@ public class DefensePlayer {
     final int NUMBERS_LENGTH = 3;
     private Integer[] numbers;
     private final RandomUtil randomUtil;
+    private int ballCount;
 
     public DefensePlayer(RandomUtil util) {
         randomUtil = util;
         initializeNumbers();
+        ballCount = 0;
     }
 
     public DefensePlayer() {
         randomUtil = new NextstepRandomUtil();
         initializeNumbers();
+        ballCount = 0;
     }
 
     private void initializeNumbers() {
@@ -56,13 +59,56 @@ public class DefensePlayer {
         }
     }
 
-    public int GetNumberAt(final int index) {
+    public int getNumberAt(final int index) {
         assert index < NUMBERS_LENGTH : "Out of Numbers indices";
 
         return numbers[index];
     }
 
-    public final Integer[] GetNumbers() {
+    public final Integer[] getNumbers() {
         return numbers;
+    }
+
+    public void evaluateData(String input_numbers) {
+        Integer[] input_number_array = convertIntegerArray(input_numbers);
+
+        ballCount = countBall(input_number_array);
+    }
+
+    public Integer[] convertIntegerArray(String string_numbers) {
+        Integer[] input_number_array = new Integer[NUMBERS_LENGTH];
+        int index = 0;
+        for (String letter : string_numbers.split("(?)")) {
+            input_number_array[index] = Integer.valueOf(letter);
+            index++;
+        }
+        return input_number_array;
+    }
+
+    int countBall(Integer[] input_numbers) {
+        int count = 0;
+        for (int i = 0; i < NUMBERS_LENGTH; i++) {
+            count += checkBallCountFrom(i, input_numbers[i]);
+        }
+        return count;
+    }
+
+    int checkBallCountFrom(int index, Integer input_number) {
+        int next_index = (index + 1) % NUMBERS_LENGTH;
+        int next_next_index = (index + 2) % NUMBERS_LENGTH;
+        int count = 0;
+
+        if (numbers[next_index].equals(input_number)) {
+            count++;
+        }
+        if (numbers[next_next_index].equals(input_number)) {
+            count++;
+        }
+
+        return count;
+    }
+
+    public int getBallCount() {
+        return ballCount;
     }
 }

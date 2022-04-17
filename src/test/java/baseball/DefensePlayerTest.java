@@ -4,7 +4,11 @@ import baseball.DefensePlayer.RandomUtil;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 
 public class DefensePlayerTest {
     class FakeRandomUtil implements RandomUtil {
@@ -25,15 +29,37 @@ public class DefensePlayerTest {
         }
     }
 
+    DefensePlayer makePlayerWithFakeRandomUtil(String numbers) {
+        Integer[] number_array = new Integer[numbers.length()];
+        int index = 0;
+        for (String letter : numbers.split("(?)")) {
+            number_array[index] = Integer.valueOf(letter);
+            index++;
+        }
+        FakeRandomUtil fakeRandomUtil = new FakeRandomUtil(number_array);
+        DefensePlayer player = new DefensePlayer(fakeRandomUtil);
+        return player;
+    }
+
     @Test
     @DisplayName("1에서 9사이에 임의로 생성된 값에서 중복 없는 서로 다른 수가 될 때까지 반복하여 3자리 수를 생성하는지 검사한다")
     void makeRandomNumbersWithoutDuplicated() {
-        Integer[] test_numbers = {1,1,2,3};
-        FakeRandomUtil fakeRandomUtil = new FakeRandomUtil(test_numbers);
-        DefensePlayer player = new DefensePlayer(fakeRandomUtil);
+        DefensePlayer player = makePlayerWithFakeRandomUtil("1123");
 
         player.makeRandomNumbers();
 
-        assertThat(Arrays.asList(player.GetNumbers())).contains(1, 2, 3);
+        assertThat(Arrays.asList(player.getNumbers())).contains(1, 2, 3);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"415:1", "451:1", "214:2", "241:2", "412:2", "312:3", "456:0"}, delimiter = ':')
+    @DisplayName("123과 비교해서 볼 개수를 제대로 판정하는지 검사한다")
+    void checkBallCount(String input_numbers, int expected_ball_count) {
+        DefensePlayer player = makePlayerWithFakeRandomUtil("123");
+
+        player.makeRandomNumbers();
+        player.evaluateData(input_numbers);
+
+        assertThat(player.getBallCount()).isEqualTo(expected_ball_count);
     }
 }
