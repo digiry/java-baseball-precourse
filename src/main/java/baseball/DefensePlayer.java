@@ -10,17 +10,18 @@ public class DefensePlayer {
     private Integer[] numbers;
     private final RandomUtil randomUtil;
     private int ballCount;
+    private int strikeCount;
 
     public DefensePlayer(RandomUtil util) {
         randomUtil = util;
         initializeNumbers();
-        ballCount = 0;
+        initializeEveryCounts();
     }
 
     public DefensePlayer() {
         randomUtil = new NextstepRandomUtil();
         initializeNumbers();
-        ballCount = 0;
+        initializeEveryCounts();
     }
 
     private void initializeNumbers() {
@@ -30,6 +31,11 @@ public class DefensePlayer {
         numbers[0] = NONE_NUMBER;
         numbers[1] = NONE_NUMBER;
         numbers[2] = NONE_NUMBER;
+    }
+
+    private void initializeEveryCounts() {
+        ballCount = 0;
+        strikeCount = 0;
     }
 
     public interface RandomUtil {
@@ -73,6 +79,7 @@ public class DefensePlayer {
         Integer[] input_number_array = convertIntegerArray(input_numbers);
 
         ballCount = countBall(input_number_array);
+        strikeCount = countStrike(input_number_array);
     }
 
     public Integer[] convertIntegerArray(String string_numbers) {
@@ -110,5 +117,26 @@ public class DefensePlayer {
 
     public int getBallCount() {
         return ballCount;
+    }
+
+    int countStrike(Integer[] input_numbers) {
+        int count = 0;
+        for (int i = 0; i < NUMBERS_LENGTH; i++) {
+            count += checkStrikeCountFrom(i, input_numbers[i]);
+        };
+        return count;
+    }
+
+    int checkStrikeCountFrom(int index, Integer input_number) {
+        int count = 0;
+        if (numbers[index].equals(input_number)) {
+            count++;
+        }
+
+        return count;
+    }
+
+    public int getStrikeCount() {
+        return strikeCount;
     }
 }

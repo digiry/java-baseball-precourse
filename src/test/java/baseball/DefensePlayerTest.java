@@ -62,4 +62,16 @@ public class DefensePlayerTest {
 
         assertThat(player.getBallCount()).isEqualTo(expected_ball_count);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"145:1", "425:1", "453:1", "124:2", "423:2", "143:2", "123:3", "456:0"}, delimiter = ':')
+    @DisplayName("123과 비교해서 스트라이크 개수를 제대로 판정하는지 검사한다")
+    void checkStrikeCount(String input_numbers, int expected_strike_count) {
+        DefensePlayer player = makePlayerWithFakeRandomUtil("123");
+
+        player.makeRandomNumbers();
+        player.evaluateData(input_numbers);
+
+        assertThat(player.getStrikeCount()).isEqualTo(expected_strike_count);
+    }
 }
