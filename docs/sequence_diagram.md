@@ -48,6 +48,7 @@ sequenceDiagram
 
         GameBoard -->> InitState: evaluatePlayerData(empty)
         InitState -->> GameController: evaluatePlayerData(empty)
+        InitState -->> GameController: makeDefensePlayerHavingRandomNumbers() 
         GameController -->> DefensePlayer: makeRandomNumbers()
 
         GameBoard -->> InitState: nextState()
@@ -129,6 +130,7 @@ sequenceDiagram
         GameController -->> ResultState: empty
 
         GameBoard -->> ResultState: evaluatePlayerData()
+        ResultState -->> GameController: evaluatePlayerData(empty)
 
         GameBoard -->> ResultState: nextState()
         ResultState -->> GameController: isTripleStrike()

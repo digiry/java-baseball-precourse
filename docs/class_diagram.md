@@ -27,6 +27,7 @@ classDiagram
     }
     class GameController {
         +getEmptyInputData()
+        +makeDefensePlayerHavingRandomNumbers()
     }
     class GameView {
         +readNumbersInput()

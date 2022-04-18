@@ -26,6 +26,7 @@ public class InitState implements State {
     @Override
     public void evaluatePlayerData(String input) {
         gameController.evaluatePlayerData(input);
+        gameController.makeDefensePlayerHavingRandomNumbers();
     }
 
     @Override

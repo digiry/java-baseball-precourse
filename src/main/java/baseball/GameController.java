@@ -60,4 +60,8 @@ public class GameController {
     public String getEmptyInputData() {
         return Constant.EMPTY_DATA;
     }
+
+    public void makeDefensePlayerHavingRandomNumbers() {
+        defensePlayer.makeRandomNumbers();
+    }
 }
