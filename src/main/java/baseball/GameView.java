@@ -62,6 +62,22 @@ public class GameView {
         return match;
     }
 
+    public String readMenuInput() {
+        String menu = consoleUtil.readLine();
+
+        if (validateMenuInput(menu) == false) {
+            throw new IllegalArgumentException(String.format("없는 메뉴 선택함: %s", menu));
+        }
+
+        return menu;
+    }
+
+    private boolean validateMenuInput(String menu) {
+        boolean match = Pattern.matches(Constant.MENU_REGEX_PATTERN, menu);
+
+        return match;
+    }
+
     public interface ConsoleUtil {
         String readLine();
     }

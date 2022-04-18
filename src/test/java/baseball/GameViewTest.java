@@ -3,6 +3,8 @@ package baseball;
 import baseball.GameView.ConsoleUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -56,6 +58,28 @@ public class GameViewTest {
 
         assertThatThrownBy(() -> {
             String input = view.readNumbersInput();
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "2"})
+    @DisplayName("진행 여부 메뉴가 메뉴 입력 규칙에 맞는지 확인한다")
+    void checkValidMenuFromUserInput(String input) {
+        GameView view = makeGameViewWithFakeConsoleUtil(input);
+
+        String menu = view.readMenuInput();
+
+        assertThat(menu).matches(Constant.MENU_REGEX_PATTERN);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"3", "A"})
+    @DisplayName("메뉴 선택을 1, 2가 아닌 경우 예외를 발생하는지 확인한다")
+    void throwIllegalArgumentExceptionIfMenuHasWrongChoice(String input) {
+        GameView view = makeGameViewWithFakeConsoleUtil(input);
+
+        assertThatThrownBy(() -> {
+            String menu = view.readMenuInput();
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }
