@@ -15,21 +15,21 @@ public class InputState implements State {
 
     @Override
     public void viewUpdate() {
-
+        gameController.printInputRequestMessage();
     }
 
     @Override
     public String readInput() {
-        return null;
+        return gameController.readNumbersInput();
     }
 
     @Override
     public void evaluatePlayerData(String input) {
-
+        gameController.evaluatePlayerData(input);
     }
 
     @Override
     public void nextState() {
-
+        gameBoard.setState(gameBoard.getResultState());
     }
 }
