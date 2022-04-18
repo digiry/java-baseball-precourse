@@ -215,6 +215,9 @@ sequenceDiagram
         MenuState -->>- GameBoard: selectedMenu
 
         GameBoard -->> MenuState: evaluatePlayerData(selectedMenu)
+        MenuState -->> GameController: getEmptyInputData()
+        GameController -->> MenuState: empty
+        MenuState -->> GameController: evaluatePlayerData(empty)
 
         opt Choice is RETRY
             GameBoard -->> MenuState: nextState()
