@@ -15,21 +15,25 @@ public class ResultState implements State {
 
     @Override
     public void viewUpdate() {
-
+        gameController.printGameResult();
     }
 
     @Override
     public String readInput() {
-        return null;
+        return gameController.getEmptyInputData();
     }
 
     @Override
     public void evaluatePlayerData(String input) {
-
+        gameController.evaluatePlayerData(input);
     }
 
     @Override
     public void nextState() {
+        gameBoard.setState(gameBoard.getInputState());
 
+        if (gameController.isTripleStrike()) {
+            gameBoard.setState(gameBoard.getDoneState());
+        }
     }
 }
