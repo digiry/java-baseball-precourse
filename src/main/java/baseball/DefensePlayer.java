@@ -63,12 +63,6 @@ public class DefensePlayer {
         }
     }
 
-    public int getNumberAt(final int index) {
-        assert index < Constant.NUMBERS_LENGTH : "Out of Numbers indices";
-
-        return numbers[index];
-    }
-
     public final Integer[] getNumbers() {
         return numbers;
     }
