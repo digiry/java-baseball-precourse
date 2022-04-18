@@ -137,4 +137,12 @@ public class DefensePlayer {
     public int getStrikeCount() {
         return strikeCount;
     }
+
+    public boolean isTripleStrike() {
+        if (strikeCount == Constant.NUMBERS_LENGTH) {
+            return true;
+        }
+
+        return false;
+    }
 }

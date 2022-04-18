@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -72,5 +73,30 @@ public class DefensePlayerTest {
         player.evaluateData(input_numbers);
 
         assertThat(player.getStrikeCount()).isEqualTo(expected_strike_count);
+    }
+
+    @Test
+    @DisplayName("123과 동일한 입력에 3스트라이크인지 확인한다")
+    void winTripleStrike() {
+        DefensePlayer player = makePlayerWithFakeRandomUtil("123");
+        player.makeRandomNumbers();
+        player.evaluateData("123");
+
+        boolean result = player.isTripleStrike();
+
+        assertThat(result).isEqualTo(true);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"145", "425", "453", "124", "423", "143", "456", "415", "451", "214", "241", "412", "312"})
+    @DisplayName("123과 비교해서 모두 3스트라이크가 아닌지 확인한다")
+    void checkTripleStrike(String input_numbers) {
+        DefensePlayer player = makePlayerWithFakeRandomUtil("123");
+        player.makeRandomNumbers();
+        player.evaluateData(input_numbers);
+
+        boolean result = player.isTripleStrike();
+
+        assertThat(result).isEqualTo(false);
     }
 }
