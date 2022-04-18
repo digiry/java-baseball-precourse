@@ -20,42 +20,43 @@ classDiagram
         +main()
     }
     class GameBoard {
-        +InitializeGameStates()
-        +Run()
-        +GetState()
-        +SetState()
+        +initializeGameStates()
+        +run()
+        +getState()
+        +setState()
     }
     class GameController {
-        +GetEmptyInputData()
+        +getEmptyInputData()
     }
     class GameView {
-        +ReadNumbersInput()
-        +ValidateNumbersInput()
-        +ReadMenuInputData()
+        +readNumbersInput()
+        +validateNumbersInput()
+        +readMenuInput()
+        +validateMenuInput()
 
-        +PrintInputRequestMessage()
-        +PrintGameResult()
-        +PrintStageDoneMessage()
-        +PrintMenuMessage()
-        +PrintCloseMessage()
+        +printInputRequestMessage()
+        +printGameResult()
+        +printStageDoneMessage()
+        +printMenuMessage()
+        +printCloseMessage()
     }
     class DefensePlayer {
-        +Numbers
-        +BallCount
-        +StrikeCount
+        +numbers
+        +ballCount
+        +strikeCount
 
-        +MakeRandomNumbers()
-        +EvaluateData()
-        +GetBallCount()
-        +GetStrikeCount()
-        +IsTripleStrike()
+        +makeRandomNumbers()
+        +evaluateData()
+        +getBallCount()
+        +getStrikeCount()
+        +isTripleStrike()
     }
     class State {
         <<interface>>
-        ViewUpdate()
-        ReadInput()
-        EvaluatePlayerData()
-        NextState()
+        viewUpdate()
+        readInput()
+        evaluatePlayerData()
+        nextState()
     }
     class InitState {
     }
@@ -67,8 +68,8 @@ classDiagram
     }
     class MenuState {
         +selectedMenu
-        +GetSelectedMenu()
-        +SetSelectedMenu()
+        +getSelectedMenu()
+        +setSelectedMenu()
     }
     class CloseState {
     }

@@ -18,16 +18,16 @@ sequenceDiagram
     Application -->> DefensePlayer: new
     Application -->> GameController: new (GameView, DefensePlayer)
     Application -->> GameBoard: new (GameController)
-    Application -->> GameBoard: Run()
+    Application -->> GameBoard: run()
 ```
 
-## GameBoard.Run() - INIT
+## GameBoard.run() - INIT
 
 **Init 게임 상태**일 때 수행하는 과정을 설명합니다.
 
 게임 상태 객체를 준비하고 초기 게임 상태로 상태를 설정하고 게임 동작을 반복한다.
 
-✔️ Application 에서 `Run()` 요청한 부분은 생략합니다.
+✔️ Application 에서 `run()` 요청한 부분은 생략합니다.
 
 ```mermaid
 sequenceDiagram
@@ -36,32 +36,32 @@ sequenceDiagram
     participant GameController
     participant DefensePlayer
 
-    GameBoard -->> GameBoard: InitializeGameStates()
-    GameBoard -->> GameBoard: SetState(InitState)
+    GameBoard -->> GameBoard: initializeGameStates()
+    GameBoard -->> GameBoard: setState(InitState)
 
     loop state != ExitState
-        GameBoard -->> InitState: ViewUpdate()
+        GameBoard -->> InitState: viewUpdate()
 
-        GameBoard -->> InitState: ReadInput()
-        InitState -->> GameController: GetEmptyInputData()
+        GameBoard -->> InitState: readInput()
+        InitState -->> GameController: getEmptyInputData()
         GameController -->> InitState: empty
 
-        GameBoard -->> InitState: EvaluatePlayerData(empty)
-        InitState -->> GameController: EvaluatePlayerData(empty)
-        GameController -->> DefensePlayer: MakeRandomNumbers()
+        GameBoard -->> InitState: evaluatePlayerData(empty)
+        InitState -->> GameController: evaluatePlayerData(empty)
+        GameController -->> DefensePlayer: makeRandomNumbers()
 
-        GameBoard -->> InitState: NextState()
-        InitState -->> GameBoard: SetState(InputState)
+        GameBoard -->> InitState: nextState()
+        InitState -->> GameBoard: setState(InputState)
     end
 ```
 
-## GameBoard.Run() - INPUT
+## GameBoard.run() - INPUT
 
 **Input 게임 상태**일 때 수행하는 과정을 설명합니다.
 
 공격 게임 플레이에게 입력 메시지를 표시하고 숫자를 입력받는다. 받은 숫자를 수비 플레이어에게 전달하여 숫자 비교 판정을 수행합니다.
 
-✔️ Application 에서 `Run()` 요청한 부분은 생략합니다.
+✔️ Application 에서 `run()` 요청한 부분은 생략합니다.
 
 ```mermaid
 sequenceDiagram
@@ -72,14 +72,14 @@ sequenceDiagram
     participant DefensePlayer
 
     loop (state != ExitState)
-        GameBoard -->> InputState: ViewUpdate()
-        InputState -->> GameController: PrintInputRequestMessage()
-        GameController -->> GameView: PrintInputRequestMessage()
+        GameBoard -->> InputState: viewUpdate()
+        InputState -->> GameController: printInputRequestMessage()
+        GameController -->> GameView: printInputRequestMessage()
 
-        GameBoard -->>+ InputState: ReadInput()
-        InputState -->>+ GameController: ReadInput()
-        GameController -->>+ GameView: ReadNumbersInput()
-        GameView -->> GameView: ValidateNumbersInput()
+        GameBoard -->>+ InputState: readInput()
+        InputState -->>+ GameController: readInput()
+        GameController -->>+ GameView: readNumbersInput()
+        GameView -->> GameView: validateNumbersInput()
         alt Is Validation Error
             GameView -->> GameBoard: Throw IllegalArgumentException
         end
@@ -87,16 +87,16 @@ sequenceDiagram
         GameController -->>- InputState: numbers
         InputState -->>- GameBoard: numbers
 
-        GameBoard -->> InputState: EvaluatePlayerData(numbers)
-        InputState -->> GameController: EvaluatePlayerData(numbers)
-        GameController -->> DefensePlayer: EvaluateData(numbers)
+        GameBoard -->> InputState: evaluatePlayerData(numbers)
+        InputState -->> GameController: evaluatePlayerData(numbers)
+        GameController -->> DefensePlayer: evaluateData(numbers)
 
-        GameBoard -->> InputState: NextState()
-        InputState -->> GameBoard: SetState(ResultState)
+        GameBoard -->> InputState: nextState()
+        InputState -->> GameBoard: setState(ResultState)
     end
 ```
 
-## GameBoard.Run() - RESULT
+## GameBoard.run() - RESULT
 
 **Result 게임 상태**일 때 수행하는 과정을 설명합니다.
 
@@ -105,7 +105,7 @@ sequenceDiagram
 판정한 결과가 3 스트라이크이면 스테이지 완료 상태(DoneState)로 설정합니다.  
 그 외 결과이면 다시 사용자 입력을 받는 입력 상태(InputState)로 설정합니다.
 
-✔️ Application 에서 `Run()` 요청한 부분은 생략합니다.
+✔️ Application 에서 `run()` 요청한 부분은 생략합니다.
 
 ```mermaid
 sequenceDiagram
@@ -116,45 +116,45 @@ sequenceDiagram
     participant DefensePlayer
 
     loop (state != ExitState)
-        GameBoard -->> ResultState: ViewUpdate()
-        ResultState -->> GameController: PrintGameResult()
-        GameController -->>+ DefensePlayer: GetBallCount()
+        GameBoard -->> ResultState: viewUpdate()
+        ResultState -->> GameController: printGameResult()
+        GameController -->>+ DefensePlayer: getBallCount()
         DefensePlayer -->>- GameController: ballCount 
-        GameController -->>+ DefensePlayer: GetStrikeCount()
-        DefensePlayer -->>- GameController: StrikeCount 
-        GameController -->> GameView: PrintGameResult(ballCount, StrikeCount)
+        GameController -->>+ DefensePlayer: getStrikeCount()
+        DefensePlayer -->>- GameController: strikeCount 
+        GameController -->> GameView: printGameResult(ballCount, strikeCount)
 
-        GameBoard -->> ResultState: ReadInput()
-        ResultState -->> GameController: GetEmptyInputData()
+        GameBoard -->> ResultState: readInput()
+        ResultState -->> GameController: getEmptyInputData()
         GameController -->> ResultState: empty
 
-        GameBoard -->> ResultState: EvaluatePlayerData()
+        GameBoard -->> ResultState: evaluatePlayerData()
 
-        GameBoard -->> ResultState: NextState()
-        ResultState -->> GameController: IsTripleStrike()
-        GameController -->> DefensePlayer: IsTripleStrike()
+        GameBoard -->> ResultState: nextState()
+        ResultState -->> GameController: isTripleStrike()
+        GameController -->> DefensePlayer: isTripleStrike()
         opt Yes Triple Strike
             DefensePlayer -->> GameController: yes
             GameController -->> ResultState: yes
-            ResultState -->> GameBoard: SetState(DoneState)
+            ResultState -->> GameBoard: setState(DoneState)
         end
 
         alt No Others
             DefensePlayer -->> GameController: no
             GameController -->> ResultState: no
-            ResultState -->> GameBoard: SetState(InputState)
+            ResultState -->> GameBoard: setState(InputState)
         end
     end
 
 ```
 
-## GameBoard.Run() - DONE
+## GameBoard.run() - DONE
 
 **Done 게임 상태**일 때 수행하는 과정을 설명합니다.
 
 공격 플레이어가 3 스트라이크로 결과를 맞춰서 축하 메시지와 해당 스테이지를 종료하는 메시지를 화면에 표시합니다.
 
-✔️ Application 에서 `Run()` 요청한 부분은 생략합니다.
+✔️ Application 에서 `run()` 요청한 부분은 생략합니다.
 
 ```mermaid
 sequenceDiagram
@@ -164,23 +164,23 @@ sequenceDiagram
     participant GameView
 
     loop (state != ExitState)
-        GameBoard -->> DoneState: ViewUpdate()
-        DoneState -->> GameController: PrintStageDoneMessage()
-        GameController -->> GameView: PrintStageDoneMessage()
+        GameBoard -->> DoneState: viewUpdate()
+        DoneState -->> GameController: printStageDoneMessage()
+        GameController -->> GameView: printStageDoneMessage()
 
-        GameBoard -->> DoneState: ReadInput()
-        DoneState -->> GameController: GetEmptyInputData()
+        GameBoard -->> DoneState: readInput()
+        DoneState -->> GameController: getEmptyInputData()
         GameController -->> DoneState: empty
         DoneState -->> GameBoard: empty
 
-        GameBoard -->> DoneState: EvaluatePlayerData(empty)
+        GameBoard -->> DoneState: evaluatePlayerData(empty)
 
-        GameBoard -->> DoneState: NextState()
-        DoneState -->> GameBoard: SetState(MenuState)
+        GameBoard -->> DoneState: nextState()
+        DoneState -->> GameBoard: setState(MenuState)
     end
 ```
 
-## GameBoard.Run() - MENU
+## GameBoard.run() - MENU
 
 **Menu 게임 상태**일 때 수행하는 과정을 설명합니다.
 
@@ -189,7 +189,7 @@ sequenceDiagram
 사용자 선택이 재시작이면 게임 초기 상태(InitState)로 설정합니다.  
 다른 선택인 게임 종료라면 게임 닫는 상태(CloseState)로 설정합니다.
 
-✔️ Application 에서 `Run()` 요청한 부분은 생략합니다.
+✔️ Application 에서 `run()` 요청한 부분은 생략합니다.
 
 ```mermaid
 sequenceDiagram
@@ -199,36 +199,36 @@ sequenceDiagram
     participant GameView
 
     loop (state != ExitState)
-        GameBoard -->> MenuState: ViewUpdate()
-        MenuState -->> GameController: PrintMenuMessage()
-        GameController -->> GameView: PrintMenuMessage()
+        GameBoard -->> MenuState: viewUpdate()
+        MenuState -->> GameController: printMenuMessage()
+        GameController -->> GameView: printMenuMessage()
 
-        GameBoard -->>+ MenuState: ReadInput()
-        MenuState -->>+ GameController: ReadMenuInputData()
-        GameController -->>+ GameView: ReadMenuInputData()
+        GameBoard -->>+ MenuState: readInput()
+        MenuState -->>+ GameController: readMenuInput()
+        GameController -->>+ GameView: readMenuInput()
         Note right of GameView: 사용자가 Menu 항목 1, 2 이외 값이 입력하면 재입력을 요청을 반복한다.
         GameView -->>- GameController: selectedMenu
         GameController -->>- MenuState: selectedMenu
-        MenuState -->> MenuState: SetSelectedMenu(selectedMenu)
+        MenuState -->> MenuState: setSelectedMenu(selectedMenu)
         MenuState -->>- GameBoard: selectedMenu
 
-        GameBoard -->> MenuState: EvaluatePlayerData(selectedMenu)
+        GameBoard -->> MenuState: evaluatePlayerData(selectedMenu)
 
         opt Choice is RETRY
-            GameBoard -->> MenuState: NextState()
-            MenuState -->> MenuState: GetSelectedMenu()
-            MenuState -->> GameBoard: SetState(InitState)
+            GameBoard -->> MenuState: nextState()
+            MenuState -->> MenuState: getSelectedMenu()
+            MenuState -->> GameBoard: setState(InitState)
         end
 
         alt Choice is CLOSE
-            GameBoard -->> MenuState: NextState()
-            MenuState -->> MenuState: GetSelectedMenu()
-            MenuState -->> GameBoard: SetState(CloseState)
+            GameBoard -->> MenuState: nextState()
+            MenuState -->> MenuState: getSelectedMenu()
+            MenuState -->> GameBoard: setState(CloseState)
         end
     end
 ```
 
-## GameBoard.Run() - CLOSE
+## GameBoard.run() - CLOSE
 
 **Close 게임 상태**일 때 수행하는 과정을 설명합니다.
 
@@ -236,7 +236,7 @@ sequenceDiagram
 
 게임 흐름을 종료하려고 게임 종료 상태(ExitState)로 설정합니다.
 
-✔️ Application 에서 `Run()` 요청한 부분은 생략합니다.
+✔️ Application 에서 `run()` 요청한 부분은 생략합니다.
 
 ```mermaid
 sequenceDiagram
@@ -246,18 +246,18 @@ sequenceDiagram
     participant GameView
 
     loop (state != ExitState)
-        GameBoard -->> CloseState: ViewUpdate()
-        CloseState -->> GameController: PrintCloseMessage()
-        GameController -->> GameView: PrintCloseMessage()
+        GameBoard -->> CloseState: viewUpdate()
+        CloseState -->> GameController: printCloseMessage()
+        GameController -->> GameView: printCloseMessage()
 
-        GameBoard -->> CloseState: ReadInput()
-        CloseState -->> GameController: GetEmptyInputData()
+        GameBoard -->> CloseState: readInput()
+        CloseState -->> GameController: getEmptyInputData()
         GameController -->> CloseState: empty
         CloseState -->> GameBoard: empty
 
-        GameBoard -->> CloseState: EvaluatePlayerData(empty)
+        GameBoard -->> CloseState: evaluatePlayerData(empty)
 
-        GameBoard -->> CloseState: NextState()
-        CloseState -->> GameBoard: SetState(ExitState)
+        GameBoard -->> CloseState: nextState()
+        CloseState -->> GameBoard: setState(ExitState)
     end
 ```
