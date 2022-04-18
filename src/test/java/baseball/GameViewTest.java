@@ -62,7 +62,7 @@ public class GameViewTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"1", "2"})
+    @ValueSource(strings = {Constant.MENU_RETRY, Constant.MENU_CLOSE})
     @DisplayName("진행 여부 메뉴가 메뉴 입력 규칙에 맞는지 확인한다")
     void checkValidMenuFromUserInput(String input) {
         GameView view = makeGameViewWithFakeConsoleUtil(input);
