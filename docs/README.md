@@ -11,7 +11,7 @@
 - [x] GameView: 숫자 3자리를 입력 받는 함수와 입력 숫자 유효성을 검사하는 함수를 구현하기
 - [x] GameView: 메뉴 입력을 받는 함수 구현하기
 - [x] GameController: DefensePlayer 와 GameView 에 호출을 전달하는 함수를 구현하기
-- [ ] GameController: 빈 값을 반환하는 함수를 구현하기
+- [x] GameController: 빈 값을 반환하는 함수를 구현하기
 - [ ] GameState: interface 를 선언하기
 - [ ] GameBoard: 게임을 실행하는 함수를 구현하기
 - [ ] GameBoard: 게임 상태를 읽고 저장하는 함수를 구현하기

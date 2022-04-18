@@ -52,4 +52,8 @@ public class GameController {
     public String readMenuInput() {
         return gameView.readMenuInput();
     }
+
+    public String getEmptyInputData() {
+        return Constant.EMPTY_DATA;
+    }
 }
