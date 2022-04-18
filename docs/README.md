@@ -15,7 +15,7 @@
 - [x] GameState: interface 를 선언하기
 - [x] GameState: 모든 게임 상태를 빈 구현체로 추가하기
 - [x] GameBoard: 모든 게임 상태를 준비하고 GameBoard 를 통해서 상태를 읽고 설정하는 함수를 구현하기
-- [ ] GameBoard: 게임을 실행하는 함수를 구현하기
+- [x] GameBoard: 게임을 실행하는 함수를 구현하기
 - [ ] 모든 States: 각 State 마다 필요한 동작을 정의하고 구체화하기
 - [ ] Application: 게임에서 필요한 모든 객체를 생성하고 게임을 실행하는 세부 내용을 작성하기
 

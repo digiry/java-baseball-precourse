@@ -35,6 +35,17 @@ public class GameBoard {
         exitState = new ExitState(board, controller);
     }
 
+    public void run() {
+        setState(initState);
+
+        while (gameState.equals(exitState) == false) {
+            gameState.viewUpdate();
+            String input = gameState.readInput();
+            gameState.evaluatePlayerData(input);
+            gameState.nextState();
+        }
+    }
+
     public void setState(State state) {
         gameState = state;
     }
