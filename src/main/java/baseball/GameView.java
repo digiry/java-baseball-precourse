@@ -19,16 +19,16 @@ public class GameView {
     }
 
     public void printGameResult(int ball_count, int strike_count) {
-        String message = "";
+        String message = "낫싱";
 
         if (ball_count > 0) {
-            message += String.format("%d볼", ball_count);
+            message = String.format("%d볼", ball_count);
         }
         if (strike_count > 0) {
-            message += String.format("%d스트라이크", strike_count);
+            message = String.format("%d스트라이크", strike_count);
         }
-        if (ball_count == 0 && strike_count == 0) {
-            message = "낫싱";
+        if (ball_count > 0 && strike_count > 0) {
+            message = String.format("%d볼 %d스트라이크", ball_count, strike_count);
         }
 
         System.out.println(message);
