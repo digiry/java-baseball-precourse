@@ -12,7 +12,7 @@
 - [x] GameView: 메뉴 입력을 받는 함수 구현하기
 - [x] GameController: DefensePlayer 와 GameView 에 호출을 전달하는 함수를 구현하기
 - [x] GameController: 빈 값을 반환하는 함수를 구현하기
-- [ ] GameState: interface 를 선언하기
+- [x] GameState: interface 를 선언하기
 - [ ] GameBoard: 게임을 실행하는 함수를 구현하기
 - [ ] GameBoard: 게임 상태를 읽고 저장하는 함수를 구현하기
 - [ ] 모든 States: 각 State 마다 필요한 동작을 정의하고 구체화하기
