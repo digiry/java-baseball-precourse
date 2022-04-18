@@ -10,6 +10,10 @@ public class GameController {
     }
 
     public void evaluatePlayerData(String data) {
+        if (data.equals(Constant.EMPTY_DATA)) {
+            return;
+        }
+
         defensePlayer.evaluateData(data);
     }
 
