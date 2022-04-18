@@ -8,7 +8,7 @@
 - [x] DefensePlayer: 입력 숫자와 자신 숫자를 비교하여 볼 개수를 구하는 함수 구현하기
 - [x] DefensePlayer: 입력 숫자와 자신 숫자를 비교하여 스트라이크 개수를 구하는 함수 구현하기
 - [x] GameView: 화면에 출력하는 모든 메시지 함수를 구현하기
-- [ ] GameView: 숫자 3자리를 입력 받는 함수와 입력 숫자 유효성을 검사하는 함수를 구현하기
+- [x] GameView: 숫자 3자리를 입력 받는 함수와 입력 숫자 유효성을 검사하는 함수를 구현하기
 - [ ] GameView: 메뉴 입력을 받는 함수 구현하기
 - [ ] GameController: DefensePlayer 와 GameView 에 호출을 전달하는 함수를 구현하기
 - [ ] GameController: 빈 값을 반환하는 함수를 구현하기

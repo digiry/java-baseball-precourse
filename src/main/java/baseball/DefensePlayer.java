@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class DefensePlayer {
-    final int NONE_NUMBER = 0;
-    final int NUMBERS_LENGTH = 3;
     private Integer[] numbers;
     private final RandomUtil randomUtil;
     private int ballCount;
@@ -26,11 +24,11 @@ public class DefensePlayer {
 
     private void initializeNumbers() {
         if (numbers == null) {
-            numbers = new Integer[NUMBERS_LENGTH];
+            numbers = new Integer[Constant.NUMBERS_LENGTH];
         }
-        numbers[0] = NONE_NUMBER;
-        numbers[1] = NONE_NUMBER;
-        numbers[2] = NONE_NUMBER;
+        numbers[0] = Constant.NONE_NUMBER;
+        numbers[1] = Constant.NONE_NUMBER;
+        numbers[2] = Constant.NONE_NUMBER;
     }
 
     private void initializeEveryCounts() {
@@ -53,7 +51,7 @@ public class DefensePlayer {
     public void makeRandomNumbers() {
         Set<Integer> unique_number_set = new HashSet<>();
 
-        while (unique_number_set.size() < NUMBERS_LENGTH) {
+        while (unique_number_set.size() < Constant.NUMBERS_LENGTH) {
             int any_number = randomUtil.getNumberInRange(1,9);
             unique_number_set.add(any_number);
         }
@@ -66,7 +64,7 @@ public class DefensePlayer {
     }
 
     public int getNumberAt(final int index) {
-        assert index < NUMBERS_LENGTH : "Out of Numbers indices";
+        assert index < Constant.NUMBERS_LENGTH : "Out of Numbers indices";
 
         return numbers[index];
     }
@@ -83,7 +81,7 @@ public class DefensePlayer {
     }
 
     public Integer[] convertIntegerArray(String string_numbers) {
-        Integer[] input_number_array = new Integer[NUMBERS_LENGTH];
+        Integer[] input_number_array = new Integer[Constant.NUMBERS_LENGTH];
         int index = 0;
         for (String letter : string_numbers.split("(?)")) {
             input_number_array[index] = Integer.valueOf(letter);
@@ -94,15 +92,15 @@ public class DefensePlayer {
 
     int countBall(Integer[] input_numbers) {
         int count = 0;
-        for (int i = 0; i < NUMBERS_LENGTH; i++) {
+        for (int i = 0; i < Constant.NUMBERS_LENGTH; i++) {
             count += checkBallCountFrom(i, input_numbers[i]);
         }
         return count;
     }
 
     int checkBallCountFrom(int index, Integer input_number) {
-        int next_index = (index + 1) % NUMBERS_LENGTH;
-        int next_next_index = (index + 2) % NUMBERS_LENGTH;
+        int next_index = (index + 1) % Constant.NUMBERS_LENGTH;
+        int next_next_index = (index + 2) % Constant.NUMBERS_LENGTH;
         int count = 0;
 
         if (numbers[next_index].equals(input_number)) {
@@ -121,9 +119,9 @@ public class DefensePlayer {
 
     int countStrike(Integer[] input_numbers) {
         int count = 0;
-        for (int i = 0; i < NUMBERS_LENGTH; i++) {
+        for (int i = 0; i < Constant.NUMBERS_LENGTH; i++) {
             count += checkStrikeCountFrom(i, input_numbers[i]);
-        };
+        }
         return count;
     }
 
